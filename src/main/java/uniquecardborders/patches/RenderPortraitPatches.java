@@ -33,9 +33,9 @@ public class RenderPortraitPatches {
     public static TextureAtlas.AtlasRegion CARD_BANNER_SPECIAL_L;
 
     public static Method renderHelperMethod;
+    public static Field renderColorField;
     public static Method popupRenderHelperMethod;
     public static Field popupCardField;
-    public static Color renderColor = Color.WHITE.cpy();
     
     static {
         ucbCardUiAtlas = new TextureAtlas(Gdx.files.internal("cardui/uniquebordercardui.atlas"));
@@ -59,6 +59,8 @@ public class RenderPortraitPatches {
         try {
             renderHelperMethod = AbstractCard.class.getDeclaredMethod("renderHelper", new Class[] { SpriteBatch.class, Color.class, TextureAtlas.AtlasRegion.class, float.class, float.class });
             renderHelperMethod.setAccessible(true);
+            renderColorField = AbstractCard.class.getDeclaredField("renderColor");
+            renderColorField.setAccessible(true);
             popupRenderHelperMethod = SingleCardViewPopup.class.getDeclaredMethod("renderHelper", new Class[] { SpriteBatch.class, float.class, float.class, TextureAtlas.AtlasRegion.class });
             popupRenderHelperMethod.setAccessible(true);
             popupCardField = SingleCardViewPopup.class.getDeclaredField("card");
@@ -77,10 +79,10 @@ public class RenderPortraitPatches {
             try {
                 switch (c.rarity) {
                     case BASIC:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_FRAME_ATTACK_BASIC, x, y });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_FRAME_ATTACK_BASIC, x, y });
                         return;
                     case SPECIAL:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_FRAME_ATTACK_SPECIAL, x, y });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_FRAME_ATTACK_SPECIAL, x, y });
                         return;
                 }
             } catch (Exception e) {
@@ -98,10 +100,10 @@ public class RenderPortraitPatches {
             try {
                 switch (c.rarity) {
                     case BASIC:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_FRAME_SKILL_BASIC, x, y });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_FRAME_SKILL_BASIC, x, y });
                         return;
                     case SPECIAL:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_FRAME_SKILL_SPECIAL, x, y });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_FRAME_SKILL_SPECIAL, x, y });
                         return;
                 }
             } catch (Exception e) {
@@ -119,10 +121,10 @@ public class RenderPortraitPatches {
             try {
                 switch (c.rarity) {
                     case BASIC:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_FRAME_POWER_BASIC, x, y });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_FRAME_POWER_BASIC, x, y });
                         return;
                     case SPECIAL:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_FRAME_POWER_SPECIAL, x, y });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_FRAME_POWER_SPECIAL, x, y });
                         return;
                 }
             } catch (Exception e) {
@@ -140,10 +142,10 @@ public class RenderPortraitPatches {
             try {
                 switch (c.rarity) {
                     case BASIC:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_BANNER_BASIC, drawX, drawY });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_BANNER_BASIC, drawX, drawY });
                         return;
                     case SPECIAL:
-                        renderHelperMethod.invoke(c, new Object[] { sb, renderColor, CARD_BANNER_SPECIAL, drawX, drawY });
+                        renderHelperMethod.invoke(c, new Object[] { sb, (Color)renderColorField.get(c), CARD_BANNER_SPECIAL, drawX, drawY });
                         return;
                 }
             } catch (Exception e) {
